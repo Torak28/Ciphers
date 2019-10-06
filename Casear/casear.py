@@ -1,32 +1,30 @@
-import sys, getopt
+import sys, argparse
 
 
 def main():
-    try:
-        msg, key, mode = None, None, None
+    msg, key, mode = None, None, None
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', '--msg', help='Pass message to encrypt, decrypt', default='Ala ma kota', type=str)
+    parser.add_argument('-k', '--key', help='Pass key to encrypt, decrypt message', default=3, type=int)
+    parser.add_argument('-e', '--encrypt', help='Set the mode to encryption', action='store_true', default=False)
+    parser.add_argument('-d', '--decrypt', help='Set the mode to decryption',action='store_true', default=False)
+    args = parser.parse_args()
 
-        opts, args = getopt.getopt(sys.argv[1:], "hedm:k:", ['help', 'encrypt', 'decrypt', 'msg=', 'key='])
-        if len(args) > 0 or len(opts) != 3:
-            print('Argument error')
-            sys.exit(2)
-        for o, a in opts:
-            if o in ('-h', '--help'):
-                print('casear.py\n\t-e to encrypt\n\t-d to decrypt\n\t-m to pass message\n\t-k to pass key')
-            elif o in ('-m', '--msg'):
-                msg = a
-            elif o in ('-k', '--key'):
-                key = int(a)
-            elif o in ('-e', '--encrypt'):
-                mode = 'encrypt'
-            elif o in ('-d', '--decrypt'):
-                mode = 'decrypt'
-        if msg is not None and key is not None and mode is not None:
-            casear(msg, key, mode)
-        else:
-            print(f'Argument error\n\tmsg: {msg},\n\tkey: {key},\n\tmode: {mode}')
-    except getopt.GetoptError as err:
-        print(err)
+    msg = args.msg
+    key = args.key
+    if args.decrypt == True:
+        mode = 'decrypt'
+    elif args.encrypt == True:
+        mode = 'encrypt'
+    else:
+        mode = None
+
+    if msg == None or key == None or mode == None:
+        print('Argument error. See --help')
         sys.exit(2)
+
+    print(f'\tmsg: {msg}\n\tkey: {key}\n\tmode: {mode}')
+    casear(msg, key, mode)
 
 def casear(msg, key, mode):
     SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkllmnopqrstuvwxyz1234567890 !?.,'
