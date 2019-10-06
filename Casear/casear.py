@@ -23,7 +23,6 @@ def main():
         print('Argument error. See --help')
         sys.exit(2)
 
-    print(f'\tmsg: {msg}\n\tkey: {key}\n\tmode: {mode}')
     casear(msg, key, mode)
 
 def casear(msg, key, mode):

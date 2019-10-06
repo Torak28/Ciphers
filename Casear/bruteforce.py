@@ -1,28 +1,21 @@
-import sys, getopt
+import sys, argparse
 
 
 def main():
-    try:
-        msg= None
+    msg= None
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', '--msg', help='Pass message to encrypt, decrypt', default='Ala ma kota', type=str)
+    args = parser.parse_args()
 
-        opts, args = getopt.getopt(sys.argv[1:], "hm:", ['help', 'msg='])
-        if len(args) > 0 or len(opts) != 1:
-            print('Argument error')
-            sys.exit(2)
-        for o, a in opts:
-            if o in ('-h', '--help'):
-                print('bruteforce.py\n\t-m to pass message')
-            elif o in ('-m', '--msg'):
-                msg = a
-        if msg is not None:
-            casear(msg)
-        else:
-            print(f'Argument error\n\tmsg: {msg}')
-    except getopt.GetoptError as err:
-        print(err)
+    msg = args.msg
+    if msg == None:
+        print('Argument error. See --help')
         sys.exit(2)
 
+    casear(msg)
+
 def casear(msg):
+
     SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkllmnopqrstuvwxyz1234567890 !?.,'
 
     for key in range(len(SYMBOLS)):
