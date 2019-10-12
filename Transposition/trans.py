@@ -15,7 +15,7 @@ def main():
         print('Argument error. See --help')
         sys.exit(2)
 
-    trans(msg, key)
+    print(trans(msg, key))
 
 def trans(msg, key):
     ciphertext = [''] * key
@@ -28,7 +28,7 @@ def trans(msg, key):
 
             currentIndex += key
 
-    print(f'{"".join(ciphertext)}')
+    return "".join(ciphertext)
 
 if __name__ == '__main__':
     main()

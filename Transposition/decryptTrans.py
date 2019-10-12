@@ -15,7 +15,7 @@ def main():
         print('Argument error. See --help')
         sys.exit(2)
 
-    trans(msg, key)
+    print(trans(msg, key))
 
 def trans(msg, key):
     numOfColumns = math.ceil(len(msg)/ key)
@@ -34,7 +34,7 @@ def trans(msg, key):
             column = 0
             row += 1
 
-    print(f'{"".join(plaintext)}')
+    return "".join(plaintext)
 
 if __name__ == '__main__':
     main()
